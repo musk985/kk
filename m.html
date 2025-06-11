@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पेशेवर ई-कॉमर्स स्टोर</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #2b5876, #4e4376);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+
+        body.bright-mode {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 10%);
+            background-size: 20px 20px;
+            animation: pulse 10s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: #1a1a33;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        body.bright-mode .navbar {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: #ffd700;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        body.bright-mode .navbar a {
+            color: #2b5876;
+        }
+
+        .navbar a:hover {
+            color: #ffaa00;
+        }
+
+        .toggle-mode {
+            background: #ffd700;
+            color: #1a1a33;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        body.bright-mode .toggle-mode {
+            background: #2b5876;
+            color: #fff;
+        }
+
+        .toggle-mode:hover {
+            background: #ffaa00;
+            transform: scale(1.05);
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #2b5876;
+            color: #fff;
+            padding: 12px 25px;
+            border: 2px solid #ffd700;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        body.bright-mode .tab-btn {
+            background: #fff;
+            color: #2b5876;
+            border-color: #2b5876;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: #ffd700;
+            color: #1a1a33;
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        /* Product Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: #1a1a33;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        body.bright-mode .product-card {
+            background: #fff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        body.bright-mode .product-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 3px solid #ffd700;
+            transition: transform 0.3s ease;
+        }
+
+        body.bright-mode .product-image {
+            border-color: #2b5876;
+        }
+
+        .product-image:hover {
+            transform: scale(1.1);
+        }
+
+        .product-title {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #ffd700;
+        }
+
+        body.bright-mode .product-title {
+            color: #2b5876;
+        }
+
+        .product-description {
+            font-size: 0.9em;
+            color: #b0b0ff;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        body.bright-mode .product-description {
+            color: #666;
+        }
+
+        .price {
+            font-size: 1.3em;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        body.bright-mode .price {
+            color: #2b5876;
+        }
+
+        .buy-now-btn {
+            background: #ffd700;
+            color: #1a1a33;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        body.bright-mode .buy-now-btn {
+            background: #2b5876;
+            color: #fff;
+        }
+
+        .buy-now-btn:hover {
+            background: #ffaa00;
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        body.bright-mode .buy-now-btn:hover {
+            background: #1a4360;
+            box-shadow: 0 0 15px #2b5876;
+        }
+
+        /* Modal for Contact/About */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background: #1a1a33;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        body.bright-mode .modal-content {
+            background: #fff;
+            color: #1a1a33;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #ffd700;
+        }
+
+        body.bright-mode .close-btn {
+            color: #2b5876;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar a {
+                margin: 0 10px;
+                font-size: 1em;
+            }
+
+            .tab-btn {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="#" onclick="openModal('contact')">संपर्क करें</a>
+            <a href="#" onclick="openModal('about')">हमारे बारे में</a>
+        </div>
+        <button class="toggle-mode" onclick="toggleMode()">उज्ज्वल मोड</button>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+        <button class="tab-btn active" onclick="showCategory('gadi')">गाड़ी</button>
+        <button class="tab-btn" onclick="showCategory('mrva')">मड़वा</button>
+        <button class="tab-btn" onclick="showCategory('manch')">स्टेज</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="container" id="gadi">
+        <!-- गाड़ी Products -->
+        <div class="product-card">
+            <img src="https://drive.google.com/thumbnail?id=13ajf5o6KeDW5c8dz134xjb2g8pgY3RTm" 
+                 alt="उत्पाद छवि" class="product-image">
+            <h2 class="product-title">
+            र</h2>
+            <p class="product-description"></p>
+            <div class="price">₹50,00,000</div>
+            <button class="buy-now-btn" onclick="alert('खरीद पेज पर रीडायरेक्ट हो रहा है...')">अभी खरीदें!</button>
+        </div>
+        <div class="product-card">
+            <img src="https://drive.google.com/thumbnail?id=11w9tFlVcLVl_wDC5rMpZ9G59bnxzA2If" 
+                 alt="उत्पाद छवि" class="product-image">
+            <h2 class="product-title">इलेक्ट्रिक बाइक</h2>
+            <p class="product-description">पर्यावरण-अनुकूल और तेज़ राइड।</p>
+            <div class="price">₹1,50,000</div>
+            <button class="buy-now-btn" onclick="alert('खरीद पेज पर रीडायरेक्ट हो रहा है...')">अभी खरीदें!</button>
+        </div>
+        
+         <div class="product-card">
+            <img src="https://drive.google.com/thumbnail?id=11w9tFlVcLVl_wDC5rMpZ9G59bnxzA2If" 
+                 alt="उत्पाद छवि" class="product-image">
+            <h2 class="product-title">इलेक्ट्रिक बाइक</h2>
+            <p class="product-description">पर्यावरण-अनुकूल और तेज़ राइड।</p>
+            <div class="price">₹1,50,000</div>
+            <button class="buy-now-btn" onclick="alert('खरीद पेज पर रीडायरेक्ट हो रहा है...')">अभी खरीदें!</button>
+        </div>
+        <!-- Add more गाड़ी products here -->
+    </div>
+
+    <div class="container" id="mrva" style="display: none;">
+        <!-- मृदा Products -->
+        <div class="product-card">
+            <img src="https://drive.google.com/thumbnail?id=13I3C5lu_h4JktVhxz8qA_CcOcus6rM_C" 
+                 alt="उत्पाद छवि" class="product-image">
+            <h2 class="product-title">डिज़ाइनर जैकेट</h2>
+            <p class="product-description">आकर्षक और आरामदायक स्ट्रीटवियर।</p>
+            <div class="price">₹5,999</div>
+            <button class="buy-now-btn" onclick="alert('खरीद पेज पर रीडायरेक्ट हो रहा है...')">अभी खरीदें!</button>
+        </div>
+        <div class="product-card">
+            <img src="https://drive.google.com/thumbnail?id=132TaiGrCj8IYn6d2Z1hXopk_J_MSyEke" 
+                 alt="उत्पाद छवि" class="product-image">
+            <h2 class="product-title">प्रीमियम जूते</h2>
+            <p class="product-description">आधुनिक डिज़ाइन के साथ उच्च गुणवत्ता वाले जूते।</p>
+            <div class="price">₹6,999</div>
+            <button class="buy-now-btn" onclick="alert('खरीद पेज पर रीडायरेक्ट हो रहा है...')">अभी खरीदें!</button>
+        </div>
+        <!-- Add more मृदा products here -->
+    </div>
+
+    <div class="container" id="manch" style="display: none;">
+        <!-- मंच Products -->
+        <div class="product-card">
+            <img src="https://drive.google.com/thumbnail?id=12xb05ZY0soqmvKSHn6Z2OhhZOZttCcnZ" 
+                 alt="उत्पाद छवि" class="product-image">
+            <h2 class="product-title">वायरलेस इयरबड्स</h2>
+            <p class="product-description">कॉम्पैक्ट और उच्च गुणवत्ता वाली ऑडियो।</p>
+            <div class="price">₹2,999</div>
+            <button class="buy-now-btn" onclick="alert('खरीद पेज पर रीडायरेक्ट हो रहा है...')">अभी खरीदें!</button>
+        </div>
+        <!-- Add more मंच products here -->
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('contact')">×</span>
+            <h2>हमसे संपर्क करें</h2>
+            <p>ईमेल: <a href="mailto:support@example.com" style="color: #ffd700;">support@example.com</a></p>
+            <p>फोन: <a href="tel:+1234567890" style="color: #ffd700;">+1 234 567 890</a></p>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('about')">×</span>
+            <h2>हमारे बारे में</h2>
+            <p>गाड़ी,मृदा, और मंच के लिए आपका भरोसेमंद रिटेलर। गुणवत्ता की गारंटी!</p>
+        </div>
+    </div>
+
+    <script>
+        // Dark/Bright Mode Toggle
+        function toggleMode() {
+            document.body.classList.toggle('bright-mode');
+            const button = document.querySelector('.toggle-mode');
+            button.textContent = document.body.classList.contains('bright-mode') ? 'डार्क मोड' : 'उज्ज्वल मोड';
+        }
+
+        // Modal Functions
+        function openModal(type) {
+            document.getElementById(`${type}Modal`).style.display = 'flex';
+        }
+
+        function closeModal(type) {
+            document.getElementById(`${type}Modal`).style.display = 'none';
+        }
+
+        // Category Tab Switching
+        function showCategory(category) {
+            document.querySelectorAll('.container').forEach(container => {
+                container.style.display = 'none';
+            });
+            document.getElementById(category).style.display = 'grid';
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[onclick="showCategory('${category}')"]`).classList.add('active');
+        }
+
+        // Image Adjustment
+        document.querySelectorAll('.product-image').forEach(img => {
+            img.onload = () => {
+                if (img.naturalWidth > img.naturalHeight) {
+                    img.style.width = '100%';
+                    img.style.height = 'auto';
+                } else {
+                    img.style.height = '200px';
+                    img.style.width = 'auto';
+                }
+            };
+            // Fallback for cached images
+            if (img.complete) {
+                if (img.naturalWidth > img.naturalHeight) {
+                    img.style.width = '100%';
+                    img.style.height = 'auto';
+                } else {
+                    img.style.height = '200px';
+                    img.style.width = 'auto';
+                }
+            }
+            // Error handling for images
+            img.onerror = () => {
+                img.src = 'https://via.placeholder.com/200x200?text=छवि+उपलब्ध+नहीं';
+                img.style.width = '100%';
+                img.style.height = 'auto';
+            };
+        });
+    </script>
+</body>
+</html>
